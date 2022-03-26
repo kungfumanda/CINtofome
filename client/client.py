@@ -6,19 +6,33 @@ HOST = '127.0.0.1'
 PORT = 5000  
 
 udp_client = socket(AF_INET, SOCK_DGRAM)
-server_adress = (HOST, PORT)
+server_address = (HOST, PORT)
 
 '''inserir ainda leitura de arquivo teste ao invés de mensagem'''
 
-msg = "teste"
+file = open("test_file.txt","rb")
+msg = file.read(1024)
 
 while msg:
-    udp_client.sendto(msg, server_adress)
-    msg = ""
+    if(udp_client.sendto(msg, server_address)):
+        print("Sending to host...")
+        msg = file.read(1024)
+
+file.close()
 
 '''inserir escrita de arquivo teste ao invés de mensagem'''
 
-msg_rec, address = udp_client.recvfrom(1024)
-print(f"Message recieved: {msg_rec}\n From: {address}")
+file = open("recieved_file.txt", "wb")
 
-udp_client.close()
+msg,address = udp_client.recvfrom(1024)
+print("Recieving...")
+
+try:
+    while msg:
+        udp_client.settimeout(2)
+        file.write(msg)
+        msg,address = udp_client.recvfrom(1024)
+except timeout:
+    udp_client.close()
+    file.close()
+    print ("File available!")
