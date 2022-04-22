@@ -1,5 +1,5 @@
 from socket import *
-from checksum import checksum
+from utils.checksum import checksum
 import time
 
 class RDT:
@@ -74,7 +74,7 @@ class RDT:
         checksum = msg['checksum']
         payload = msg['payload']
 
-        if self.checksum_(checksum, payload) and seq_num == self.seq_num:
+        if self._checksum(checksum, payload) and seq_num == self.seq_num:
             self.send_ack(1)
             self.seq_num = 1 - self.seq_num
             return payload

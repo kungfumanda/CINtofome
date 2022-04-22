@@ -1,5 +1,5 @@
 from socket import *
-from rdt import *
+from rdt.rdt import *
 
 RDTSocket = RDT(True)
 

@@ -1,4 +1,4 @@
-from rdt import *
+from rdt.rdt import *
 from socket import *
 
 # Send
