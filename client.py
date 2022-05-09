@@ -1,28 +1,29 @@
-from rdt.rdt import *
 from socket import *
+from rdt import *
 
-# Send
+#intancia um objeto do tipo RDT como um cliente
 RDTSocket = RDT()
 
-file = open("test_file.txt","rb")
-msg = file.read(RDTSocket.bufferSize)
+#mensagem vazia para o primeiro contato com o servidor
+msg = " "
 
-print("Sending to host...")
+#loop de repostas para o servidor 
+while True:
+  
+  RDTSocket.send_pkg(msg.encode())
 
-while msg:
-    RDTSocket.send_pkg(msg)
-    msg = file.read(RDTSocket.bufferSize)
+  resp = RDTSocket.receive()
 
-file.close()
+  #se o cliente receber uma resposta de "ok" do server, encerra a conexão
+  if (resp.decode('utf-8') == "ok"):
+    break
+
+  msg = input(resp.decode('utf8'))
 
 
-# Receive
-file = open("received_file.txt", "wb")
-
-msg = RDTSocket.receive()
-print("receiving...")
-
-file.write(msg)
-file.close()
+resp = RDTSocket.receive()
+print(resp.decode())
 
 RDTSocket.close_connection()
+    
+    
