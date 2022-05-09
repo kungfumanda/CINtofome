@@ -8,19 +8,9 @@ Chatbot temático para restaurantes, implementado com programação básica para
 *Entregas*
 - [X] Implementação de comunicação UDP comum e de uma função checksum.
 - [X] Implementação de confiabilidade segundo o canal de transmissão confiável rdt3.0.
-- [ ] Implementação do chatbot, exibido por linha de comando.
+- [X] Implementação do chatbot, exibido por linha de comando.
 
 *Tecnologias:*
 - Python
   - Biblioteca Socket
   - Módulo time
-
-*Estrutura*
-```
-├── server.py
-├── client.py
-└── rdt
-    ├── rdt.py
-└── utils
-    ├── checksum.py
-```
